@@ -1,9 +1,11 @@
 class Router:
 	def __init__(self):
-		self.router = {}
+		self.routes = {}
 
 	def addRoute(self, method, url, function):
-		self.router[method][url] = function
+		if not method in self.routes:
+			self.routes[method] = {}
+		self.routes[method][url] = function
 
-	def exexuteRoute(self, method, url):
-		return self.router[method][url]()
+	def executeRoute(self, request, response):
+		return self.routes[request.method][request.path](request, response)
