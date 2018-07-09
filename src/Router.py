@@ -8,4 +8,11 @@ class Router:
 		self.routes[method][url] = function
 
 	def executeRoute(self, request, response):
-		return self.routes[request.method][request.path](request, response)
+		try:
+			return self.routes[request.method][request.path](request, response)
+		except KeyError:
+			response.responseCode = 404
+			response.withJson({
+				"error" : "Invalid Path"
+			})
+			return response

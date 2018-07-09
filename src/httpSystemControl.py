@@ -4,16 +4,17 @@ import requestHandler
 import time
 from http.server import HTTPServer
 
-def hello_world(request, response):
-	response.write("Hello World :)")
-	return response
+from Ping import Ping
 
 
 class Service(Daemon):
 	def run(self):
 		router = Router()
-		router.addRoute("GET", "/", hello_world)
 
+
+		ping = Ping()
+
+		router = ping.addRoutes(router)
 
 		handler = requestHandler.makeRequestHandler(router)
 		httpd = HTTPServer(('192.168.0.82', 8000), handler)

@@ -15,6 +15,9 @@ def makeRequestHandler(router):
 		
 			self.send_response(response.responseCode)
 
+			for header in response.headers:
+				self.send_header(header, response.headers[header])
+
 			self.end_headers()
 
 			body = BytesIO()
